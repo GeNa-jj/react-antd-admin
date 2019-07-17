@@ -1,0 +1,31 @@
+.nav {
+	> div {
+		display: flex;
+		flex-direction: column;
+		.logo {
+			height: 32px;
+			background: #ffffff;
+			border-radius: 6px;
+			margin: 16px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-weight: bold;
+			white-space: nowrap;
+		}
+		ul {
+			overflow: auto;
+			flex: 1;
+			-webkit-overflow-scrolling: touch;
+		}
+	}
+}
+
+.popoverNav {
+	> div {
+		height: 50vh;
+		.logo {
+			display: none;
+		}
+	}
+}
