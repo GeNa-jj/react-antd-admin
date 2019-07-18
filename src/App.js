@@ -1,6 +1,6 @@
 import React from 'react'
 import Routes from './router'
-import {Layout} from 'antd'
+import {Layout, Drawer} from 'antd'
 import {connectAlita} from 'redux-alita'
 import MenuCustom from './components/Menu'
 import HeaderCustom from './components/Header'
@@ -16,6 +16,8 @@ class App extends React.Component {
 	componentWillMount() {
 		this.checkLogin()
 		this.getMenu()
+
+		window.innerWidth <= 992 && this.toggle()
 
 		this.getClientWidth()
 		window.onresize = () => {
@@ -52,7 +54,7 @@ class App extends React.Component {
 				"path": '/app/text',
 				"children": [
 					{
-						"title": "有权限",
+						"title": "table",
 						"icon": null,
 						"path": "/app/text/can",
 						"children": []
@@ -68,12 +70,12 @@ class App extends React.Component {
 			{
 				"title": "错误页面",
 				"icon": 'user',
-				"path": '/app/errorPage',
+				"path": '/app/exception',
 				"children": [
 					{
 						"title": "404",
 						"icon": null,
-						"path": "/app/errorPage/404",
+						"path": "/app/exception/404",
 						"children": []
 					}
 				]
@@ -93,10 +95,20 @@ class App extends React.Component {
 		const {responsive = {data: {}}} = this.props
 		return (
 				<Layout style={{height: '100vh'}}>
-					{!responsive.data.isMobile && <MenuCustom collapsed={this.state.collapsed}/>}
+					{responsive.data.isMobile ?  (
+							<Drawer
+									visible={!this.state.collapsed}
+									placement="left"
+									closable={false}
+									onClose={this.toggle}
+									bodyStyle={{padding: 0, fontSize: 15}}
+							>
+								<MenuCustom collapsed={false} drawerHide={this.toggle}/>
+							</Drawer>
+					) : (<MenuCustom collapsed={this.state.collapsed}/>)}
 					<Layout style={{flexDirection: 'column'}}>
 						<HeaderCustom toggle={this.toggle} collapsed={this.state.collapsed}/>
-						<Content style={{padding: 12, overflow: 'initial', WebkitOverflowScrolling: 'touch', flex: 1}}>
+						<Content style={{padding: 12, overflow: 'auto', WebkitOverflowScrolling: 'touch', flex: 1}}>
 							<Routes/>
 						</Content>
 					</Layout>

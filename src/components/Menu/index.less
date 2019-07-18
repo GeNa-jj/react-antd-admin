@@ -1,4 +1,8 @@
 .nav {
+	box-shadow: 2px 0 6px rgba(0,21,41,.35);
+	display: inline-block;
+	min-height: 100vh;
+	z-index: 10;
 	> div {
 		display: flex;
 		flex-direction: column;
@@ -13,7 +17,7 @@
 			font-weight: bold;
 			white-space: nowrap;
 		}
-		ul {
+		> ul {
 			overflow: auto;
 			flex: 1;
 			-webkit-overflow-scrolling: touch;

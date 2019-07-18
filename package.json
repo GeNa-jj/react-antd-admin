@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "基于react、antd的后台管理系统",
   "author": "lujianjun <812518099@qq.com>",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "antd": "^3.20.1",
@@ -11,7 +12,6 @@
     "nprogress": "^0.2.0",
     "query-string": "^6.8.1",
     "react": "^16.8.6",
-    "react-beautiful-dnd": "^11.0.4",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",

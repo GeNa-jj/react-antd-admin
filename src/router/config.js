@@ -15,7 +15,7 @@ export const MenusConfig = [
 			component: Text
 		},
 		{
-			path: '/app/errorPage/404',
+			path: '/app/exception/404',
 			name: 'NotFound',
 			component: NotFound
 		}

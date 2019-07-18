@@ -4,34 +4,15 @@ import {Link, withRouter} from 'react-router-dom'
 import {connectAlita} from "redux-alita"
 import './index.less'
 
-const {Sider} = Layout
-
 class MenuCustom extends React.Component {
-	static getDerivedStateFromProps(props, state) {
-		if (props.collapsed !== state.collapsed) {
-			const state1 = MenuCustom.setMenuOpen(props)
-			const state2 = MenuCustom.onCollapse(props.collapsed)
-			return {
-				...state1,
-				...state2,
-				firstHide: state.collapsed !== props.collapsed && props.collapsed, // 两个不等时赋值props属性值否则为false
-				openKey: state.openKey || (!props.collapsed && state1.openKey)
-			}
-		}
-		return null
-	}
 
-	static setMenuOpen = props => {
+	static getDerivedStateFromProps(props, state) {
 		const {pathname} = props.location
+		const openKey = !props.collapsed ? pathname.substr(0, pathname.lastIndexOf('/')) : ''
 		return {
-			openKey: pathname.substr(0, pathname.lastIndexOf('/')),
-			selectedKey: pathname
-		}
-	}
-	static onCollapse = (collapsed) => {
-		return {
-			collapsed,
-			mode: collapsed ? 'vertical' : 'inline'
+			openKey: state.clickMenu ? state.openKey : openKey,
+			selectedKey: pathname,
+			clickMenu: false
 		}
 	}
 
@@ -39,12 +20,7 @@ class MenuCustom extends React.Component {
 		mode: 'inline',
 		openKey: '',
 		selectedKey: '',
-		firstHide: true  // 点击收缩菜单，第一次隐藏展开子菜单，openMenu时恢复
-	}
-
-	componentDidMount() {
-		const state = MenuCustom.setMenuOpen(this.props)
-		this.setState(state)
+		clickMenu: false
 	}
 
 	menuClick = e => {
@@ -52,13 +28,14 @@ class MenuCustom extends React.Component {
 			selectedKey: (e.path || e.key)
 		})
 
-		const { popoverHide } = this.props // 响应式布局控制小屏幕点击菜单时隐藏菜单操作
-		popoverHide && popoverHide()
+		const { drawerHide } = this.props // 响应式布局控制小屏幕点击菜单时隐藏菜单操作
+		drawerHide && drawerHide()
 	}
+
 	openMenu = v => {
 		this.setState({
 			openKey: v[v.length - 1],
-			firstHide: false
+			clickMenu: true
 		})
 	}
 
@@ -86,13 +63,14 @@ class MenuCustom extends React.Component {
 	)
 
 	render() {
-		const {selectedKey, openKey, firstHide, collapsed} = this.state
-		const {menus = {data: []}, responsive = {data: {}}} = this.props
+		const {selectedKey, openKey} = this.state
+		const {menus = {data: []}, collapsed} = this.props
 		return (
-				<Sider
+				<Layout.Sider
 						trigger={null}
 						collapsed={collapsed}
-						className={`nav ${responsive.data.isMobile && 'popoverNav'}`}
+						className="nav"
+						width={256}
 				>
 					<div className="logo">{collapsed ? 'logo' : '后台管理'}</div>
 					<Menu
@@ -100,7 +78,7 @@ class MenuCustom extends React.Component {
 							mode="inline"
 							theme="dark"
 							selectedKeys={[selectedKey]}
-							openKeys={firstHide && !responsive.data.isMobile ? null : [openKey]}
+							openKeys={[openKey]}
 							onOpenChange={this.openMenu}
 					>
 						{
@@ -109,7 +87,7 @@ class MenuCustom extends React.Component {
 							})
 						}
 					</Menu>
-				</Sider>
+				</Layout.Sider>
 		)
 	}
 }
