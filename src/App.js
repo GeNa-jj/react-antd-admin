@@ -29,7 +29,7 @@ class App extends React.Component {
 	getClientWidth = () => {
 		const {setAlitaState} = this.props
 		const clientWidth = window.innerWidth
-		setAlitaState({stateName: 'responsive', data: {isMobile: clientWidth <= 992}})
+		setAlitaState({stateName: 'responsive', data: {isMobile: clientWidth <= 992, clientWidth}})
 	}
 
 	// 检查是否已登陆
@@ -45,24 +45,24 @@ class App extends React.Component {
 			{
 				"title": "首页",
 				"icon": 'rocket',
-				"path": "/app/index",
+				"path": "/",
 				"children": []
 			},
 			{
 				"title": "权限测试",
 				"icon": 'lock',
-				"path": '/app/text',
+				"path": '/text',
 				"children": [
 					{
 						"title": "table",
 						"icon": null,
-						"path": "/app/text/can",
+						"path": "/text/can",
 						"children": []
 					},
 					{
 						"title": "路由拦截",
 						"icon": null,
-						"path": "/app/text/cannot",
+						"path": "/text/cannot",
 						"children": []
 					}
 				]
@@ -70,12 +70,12 @@ class App extends React.Component {
 			{
 				"title": "错误页面",
 				"icon": 'user',
-				"path": '/app/exception',
+				"path": '/exception',
 				"children": [
 					{
 						"title": "404",
 						"icon": null,
-						"path": "/app/exception/404",
+						"path": "/exception/404",
 						"children": []
 					}
 				]
@@ -108,7 +108,7 @@ class App extends React.Component {
 					) : (<MenuCustom collapsed={this.state.collapsed}/>)}
 					<Layout style={{flexDirection: 'column'}}>
 						<HeaderCustom toggle={this.toggle} collapsed={this.state.collapsed}/>
-						<Content style={{padding: 12, overflow: 'auto', WebkitOverflowScrolling: 'touch', flex: 1}}>
+						<Content style={{padding: 24, overflow: 'auto', WebkitOverflowScrolling: 'touch', flex: 1}}>
 							<Routes/>
 						</Content>
 					</Layout>

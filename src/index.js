@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 import { AlitaProvider, setConfig } from 'redux-alita' // redux
-import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom"
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import App from "./App"
 import Login from "./pages/login"
 import NotFound from "./pages/404"
@@ -26,11 +26,9 @@ ReactDOM.render(
 			<LocaleProvider locale={zhCN}>
 				<Router>
 					<Switch>
-						<Route exact path="/" render={() => <Redirect to="/app/index" />} />
-						<Route path="/app" component={App} />
 						<Route path="/404" component={NotFound} />
 						<Route path="/login" component={Login} />
-						<Route render={() => <Redirect to="/404" />} />
+						<Route path="/" component={App} />
 					</Switch>
 				</Router>
 			</LocaleProvider>

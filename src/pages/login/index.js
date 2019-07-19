@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, Icon, Input, Button} from 'antd'
+import {Form, Icon, Input, Button, message} from 'antd'
 import {connectAlita} from 'redux-alita'
 import {$cookie} from '../../utils/cookie'
 import NProgress from 'nprogress'
@@ -34,6 +34,8 @@ class Login extends React.Component {
 				$cookie.set('token', data.data.token, data.data.effectTime)
 				$cookie.set('menu', JSON.stringify(data.data.menu), data.data.effectTime)
 				history.replace('/')
+			} else {
+				message.error(data.message)
 			}
 		}).catch(() => NProgress.done())
 	}

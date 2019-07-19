@@ -8,7 +8,7 @@ class BreadcrumbCustom extends React.Component {
         const second = <Breadcrumb.Item>{this.props.second}</Breadcrumb.Item> || ''
         return (
             <Breadcrumb style={{ margin: '0 0 12px' }}>
-              <Breadcrumb.Item><Link to={'/app/index'}>首页</Link></Breadcrumb.Item>
+              <Breadcrumb.Item><Link to={'/'}>首页</Link></Breadcrumb.Item>
               {first}
               {second}
             </Breadcrumb>

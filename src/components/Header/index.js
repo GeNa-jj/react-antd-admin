@@ -1,5 +1,5 @@
 import React from 'react'
-import {Layout, Icon, Menu, Dropdown} from 'antd'
+import {Layout, Icon, Menu, Dropdown, message} from 'antd'
 import {connectAlita} from 'redux-alita'
 import {withRouter} from 'react-router-dom'
 import './index.less'
@@ -56,6 +56,8 @@ class HeaderCustom extends React.Component {
 				$cookie.remove('token')
 				$cookie.remove('menu')
 				history.push('/login')
+			} else {
+				message.error(data.message)
 			}
 		})
 	}

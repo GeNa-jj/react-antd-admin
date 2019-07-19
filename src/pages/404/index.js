@@ -16,7 +16,8 @@ class NotFound extends React.Component {
 		return (
 				<div className="notFound">
 					<img src={img} className={`animated swing ${this.state.animated}`} onMouseEnter={this.enter} alt=""/>
-					<Button type="dashed" shape="round" style={{marginTop: 60}} href="/">
+					<p style={{marginTop: 60}}>抱歉，你访问的页面不存在。</p>
+					<Button type="dashed" shape="round" style={{marginTop: 20}} href="/">
 						Back to home
 					</Button>
 				</div>

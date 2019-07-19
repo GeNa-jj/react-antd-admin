@@ -5,17 +5,17 @@ import Text from '../pages/text'
 
 export const MenusConfig = [
 		{
-			path: '/app/index',
+			path: '/',
 			name: 'Home',
 			component: Home
 		},
 		{
-			path: '/app/text/can',
+			path: '/text/can',
 			name: 'Home',
 			component: Text
 		},
 		{
-			path: '/app/exception/404',
+			path: '/exception/404',
 			name: 'NotFound',
 			component: NotFound
 		}
