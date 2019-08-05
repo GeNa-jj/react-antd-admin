@@ -1,7 +1,7 @@
 /*eslint-disable*/
 const $cookie = {
 	// 获取cookie
-	get(key) {
+	get: function(key) {
 		const name = key + '='
 		const ca = document.cookie.split(';')
 		for (let i = 0; i < ca.length; i++) {
@@ -14,7 +14,7 @@ const $cookie = {
 	},
 
 	// 设置cookie,默认是7天
-	set(key, value, effectTime = (7 * 24 * 60 * 60), path, domain, secure) {
+	set: function(key, value, effectTime = (7 * 24 * 60 * 60), path, domain, secure) {
 		const d = new Date()
 		d.setTime(d.getTime() + (effectTime * 1000))
 		const expires = 'expires=' + d.toGMTString()
@@ -22,7 +22,7 @@ const $cookie = {
 	},
 
 	// 删除cookie
-	remove(key, path, domain) {
+	remove: function(key, path, domain) {
 		if (!key || !this.isKey(key)) {
 			return false
 		}

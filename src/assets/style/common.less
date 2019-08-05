@@ -55,3 +55,21 @@ a {
 	visibility: hidden;
 	zoom: 1;
 }
+
+@media (max-width: 992px) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+

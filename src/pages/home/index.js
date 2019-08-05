@@ -11,26 +11,26 @@ class Home extends React.Component {
 		dateKey: [
 			{
 				name: '今日',
-				value: [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')],
-				active: true
+				value: [moment(), moment()],
+				active: false
 			},
 			{
 				name: '本周',
-				value: [moment().week(moment().week()).startOf('week').format('YYYY-MM-DD'), moment().week(moment().week()).endOf('week').format('YYYY-MM-DD')],
+				value: [moment().week(moment().week()).startOf('week'), moment().week(moment().week()).endOf('week')],
 				active: false
 			},
 			{
 				name: '本月',
-				value: [moment().month(moment().month()).startOf('month').format('YYYY-MM-DD'), moment().month(moment().month()).endOf('month').format('YYYY-MM-DD')],
+				value: [moment().month(moment().month()).startOf('month'), moment().month(moment().month()).endOf('month')],
 				active: false
 			},
 			{
 				name: '全年',
-				value: [moment().year(moment().year()).startOf('year').format('YYYY-MM-DD'), moment().year(moment().year()).endOf('year').format('YYYY-MM-DD')],
-				active: false
+				value: [moment().year(moment().year()).startOf('year'), moment().year(moment().year()).endOf('year')],
+				active: true
 			}
 		],
-		defaultValue: [moment(), moment()]
+		defaultValue: [moment().year(moment().year()).startOf('year'), moment().year(moment().year()).endOf('year')]
 	}
 
 	getOption = () => {
@@ -166,22 +166,14 @@ class Home extends React.Component {
 
 	getRangeDate = (date, dateString) => {
 		const {dateKey} = this.state
+		const defaultValue = date ? dateString : [dateString[0].format('YYYY-MM-DD'), dateString[1].format('YYYY-MM-DD')]
 		dateKey.forEach(item => {
 			item.active = false
-			if (item.value[0] === dateString[0] && item.value[1] === dateString[1]) item.active = true
-		})
-		this.setState({dateKey})
-	}
-
-	selDate = defaultValue => {
-		const {dateKey} = this.state
-		dateKey.forEach(item => {
-			item.active = false
-			if (item.value[0] === defaultValue[0] && item.value[1] === defaultValue[1]) item.active = true
+			if (item.value[0].format('YYYY-MM-DD') === defaultValue[0] && item.value[1].format('YYYY-MM-DD') === defaultValue[1]) item.active = true
 		})
 		this.setState({
 			dateKey,
-			defaultValue: [moment(defaultValue[0], 'YYYY-MM-DD'), moment(defaultValue[1], 'YYYY-MM-DD')]
+			defaultValue: date || dateString
 		})
 	}
 
@@ -231,13 +223,13 @@ class Home extends React.Component {
 												<ul>
 													{this.state.dateKey.map((item, index) => (
 															<li key={index}><span className={item.active ? 'active' : ''} onClick={() => {
-																this.selDate(item.value)
+																this.getRangeDate('', item.value)
 															}}>{item.name}</span></li>
 													))}
 												</ul>
 										)
 									}
-									<DatePicker.RangePicker style={{width: 256}} onChange={this.getRangeDate} value={this.state.defaultValue} format="YYYY-MM-DD"/>
+									<DatePicker.RangePicker style={{width: 256}} onChange={this.getRangeDate} value={this.state.defaultValue} />
 								</div>
 							)
 						}>

@@ -10,8 +10,7 @@ const {Header} = Layout
 
 class HeaderCustom extends React.Component {
 	state = {
-		showChangePwdDodal: false,
-		showMenu: false
+		showChangePwdDodal: false
 	}
 
 	showModal = () => {
@@ -76,22 +75,13 @@ class HeaderCustom extends React.Component {
 			</Menu>
 	)
 
-	popoverHide = () => {
-		this.setState({
-			showMenu: false
-		})
-	}
-
-	handleVisibleChange = showMenu => {
-		this.setState({ showMenu })
-	}
-
 	render() {
+		const {collapsed, toggle} = this.props
 		return (
 				<Header className="header-custom">
 					<Icon
-							type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
-							onClick={this.props.toggle}
+							type={collapsed ? 'menu-unfold' : 'menu-fold'}
+							onClick={toggle}
 					/>
 
 					<Dropdown overlay={this.menu} trigger={['click']}>

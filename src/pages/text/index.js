@@ -1,6 +1,6 @@
 import React from 'react'
 import BreadcrumbCustom from '../../components/Breadcrumb'
-import {Table, Divider, Tag} from 'antd'
+import {Table, Divider, Tag, Card, Row, Col, Input, Button, Form, Icon, Tooltip} from 'antd'
 import Pagination from '../../components/Pagination'
 
 const data = [
@@ -30,16 +30,18 @@ const data = [
 	}
 ]
 
-for (let i = 4; i < 10; i++) {
+let arr = [...Array(7).keys()]
+
+arr.forEach(item => {
 	data.push({
-		key: i,
+		key: item + 4,
 		firstName: 'Joe',
 		lastName: 'Black',
 		age: 32,
 		address: 'Sidney No. 1 Lake Park',
 		tags: ['cool', 'teacher'],
 	})
-}
+})
 
 class Text extends React.Component {
 	state = {
@@ -57,45 +59,104 @@ class Text extends React.Component {
 		})
 	}
 
+	getFields = () => {
+		const {getFieldDecorator} = this.props.form
+		const children = []
+		for (let i = 0; i < 4; i++) {
+			children.push(
+					<Col xl={6} lg={8} md={12} sm={12} xs={24} key={i}>
+						<Form.Item label={`Field ${i}`}>
+							{getFieldDecorator(`field-${i}`, {
+								rules: [
+									{
+										required: true,
+										message: 'Input something!'
+									}
+								]
+							})(<Input placeholder="placeholder"/>)}
+						</Form.Item>
+					</Col>
+			)
+		}
+		return children
+	}
+
+	handleSearch = e => {
+		e.preventDefault()
+		this.props.form.validateFields((err, values) => {
+			console.log('Received values of form: ', values)
+		})
+	}
+
+	handleReset = () => {
+		this.props.form.resetFields()
+	}
+
 	render() {
+		const formItemLayout = {
+			labelCol: {span: 8},
+			wrapperCol: {span: 16}
+		}
 		return (
-				<div className="container">
-					<BreadcrumbCustom first="权限测试" second="table" />
-					<Table dataSource={data} pagination={false} bordered>
-						<Table.Column title="First Name" dataIndex="firstName" key="firstName"/>
-						<Table.Column title="Last Name" dataIndex="lastName" key="lastName"/>
-						<Table.Column title="Age" dataIndex="age" key="age"/>
-						<Table.Column title="Address" dataIndex="address" key="address"/>
-						<Table.Column
-								title="Tags"
-								dataIndex="tags"
-								key="tags"
-								render={tags => (
-										<span>
-          						{tags.map(tag => (
-													<Tag color="blue" key={tag}>
-														{tag}
-													</Tag>
-											))}
-        						</span>
-								)}
-						/>
-						<Table.Column
-								title="Action"
-								key="action"
-								render={(text, record) => (
-										<span>
-											<span>Invite {record.lastName}</span>
-											<Divider type="vertical"/>
-											<span>Delete</span>
-										</span>
-								)}
-						/>
-					</Table>
-					<Pagination total={this.state.total} pageChange={this.pageChange} />
+				<div className="test">
+					<BreadcrumbCustom first="权限测试" second="table"/>
+					<Card>
+						<Form {...formItemLayout} onSubmit={this.handleSearch}>
+							<Row gutter={24}>{this.getFields()}</Row>
+							<Row>
+								<Col span={24}>
+									<Form.Item wrapperCol={{span: 24}} style={{textAlign: 'right'}}>
+										<Button type="primary" htmlType="submit">
+											Search
+										</Button>
+										<Button style={{marginLeft: 8}} onClick={this.handleReset}>
+											Clear
+										</Button>
+									</Form.Item>
+								</Col>
+							</Row>
+						</Form>
+
+						<Table dataSource={data} pagination={false} bordered>
+							<Table.Column title="First Name" dataIndex="firstName" key="firstName"/>
+							<Table.Column title="Last Name" dataIndex="lastName" key="lastName"/>
+							<Table.Column title="Age" dataIndex="age" key="age"/>
+							<Table.Column title="Address" dataIndex="address" key="address"/>
+							<Table.Column
+									title="Tags"
+									dataIndex="tags"
+									key="tags"
+									render={tags => (
+											<span>
+												{tags.map(tag => (
+														<Tag color="blue" key={tag}>
+															{tag}
+														</Tag>
+												))}
+											</span>
+									)}
+							/>
+							<Table.Column
+									title="Action"
+									key="action"
+									render={(text, record) => (
+											<span>
+												<Tooltip placement="top" title="编辑">
+													<Icon type="edit" theme="twoTone" style={{cursor: 'pointer'}}/>
+												</Tooltip>
+												<Divider type="vertical"/>
+												<Tooltip placement="top" title="删除">
+													<Icon type="delete" theme="twoTone" twoToneColor="#ff4d4f" style={{cursor: 'pointer'}}/>
+												</Tooltip>
+											</span>
+									)}
+							/>
+						</Table>
+						<Pagination total={this.state.total} pageChange={this.pageChange}/>
+					</Card>
 				</div>
 		)
 	}
 }
 
-export default Text
+export default Form.create()(Text)

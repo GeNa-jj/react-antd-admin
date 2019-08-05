@@ -45,12 +45,16 @@ class ChangePwdMoadl extends React.Component {
 		}
 	}
 
+	handleStart = e => {
+		console.log(e)
+	}
+
 	render() {
 		const {getFieldDecorator} = this.props.form
 		return (
 				<Modal
 						width={400}
-						title="Basic Modal"
+						title="修改密码"
 						visible={this.props.visible}
 						onOk={this.handleOk}
 						onCancel={this.handleCancel}
